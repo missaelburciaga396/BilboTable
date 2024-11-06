@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QHBoxLayout, QHeaderView
     QLabel, QLineEdit, QMainWindow, QMenuBar,
     QPushButton, QSizePolicy, QStatusBar, QTableView,
     QVBoxLayout, QWidget)
-
+import sqlite3
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
@@ -161,4 +161,3 @@ class Ui_MainWindow(object):
         self.pesolastreBtnOk.setText(QCoreApplication.translate("MainWindow", u"ok", None))
         self.usrnameBtnOk.setText(QCoreApplication.translate("MainWindow", u"ok", None))
     # retranslateUi
-
