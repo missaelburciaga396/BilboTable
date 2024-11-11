@@ -15,16 +15,20 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QHBoxLayout, QHeaderView,
-    QLabel, QLineEdit, QMainWindow, QMenuBar,
-    QPushButton, QSizePolicy, QStatusBar, QTableView,
-    QVBoxLayout, QWidget)
-import sqlite3
+from PySide6.QtWidgets import (QApplication, QCheckBox, QHeaderView, QMainWindow,
+    QMenuBar, QPushButton, QSizePolicy, QStatusBar,
+    QTableView, QVBoxLayout, QWidget)
+
+from ViewModel.BilboMainViewModel import BilboMainViewModel
+
+db_path = "DB/BilboDb.db"
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(800, 600)
+        self.ViewModel = BilboMainViewModel(db_path)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.tableViewBilbo = QTableView(self.centralwidget)
@@ -38,7 +42,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.btnAgregar = QPushButton(self.verticalLayoutWidget)
         self.btnAgregar.setObjectName(u"btnAgregar")
-
+        self.btnAgregar.clicked.connect(self.ViewModel.registrar_widget)
         self.verticalLayout.addWidget(self.btnAgregar)
 
         self.btnEliminar = QPushButton(self.verticalLayoutWidget)
@@ -77,61 +81,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.checkBoxPistolsquad)
 
-        self.horizontalLayoutWidget = QWidget(self.centralwidget)
-        self.horizontalLayoutWidget.setObjectName(u"horizontalLayoutWidget")
-        self.horizontalLayoutWidget.setGeometry(QRect(0, 0, 261, 51))
-        self.horizontalLayout = QHBoxLayout(self.horizontalLayoutWidget)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.labelUsrName = QLabel(self.horizontalLayoutWidget)
-        self.labelUsrName.setObjectName(u"labelUsrName")
-
-        self.horizontalLayout.addWidget(self.labelUsrName)
-
-        self.lineEditUsrName = QLineEdit(self.horizontalLayoutWidget)
-        self.lineEditUsrName.setObjectName(u"lineEditUsrName")
-
-        self.horizontalLayout.addWidget(self.lineEditUsrName)
-
-        self.horizontalLayoutWidget_2 = QWidget(self.centralwidget)
-        self.horizontalLayoutWidget_2.setObjectName(u"horizontalLayoutWidget_2")
-        self.horizontalLayoutWidget_2.setGeometry(QRect(370, 0, 101, 41))
-        self.horizontalLayout_2 = QHBoxLayout(self.horizontalLayoutWidget_2)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.labelPeso = QLabel(self.horizontalLayoutWidget_2)
-        self.labelPeso.setObjectName(u"labelPeso")
-
-        self.horizontalLayout_2.addWidget(self.labelPeso)
-
-        self.lineEditPeso = QLineEdit(self.horizontalLayoutWidget_2)
-        self.lineEditPeso.setObjectName(u"lineEditPeso")
-
-        self.horizontalLayout_2.addWidget(self.lineEditPeso)
-
-        self.horizontalLayoutWidget_3 = QWidget(self.centralwidget)
-        self.horizontalLayoutWidget_3.setObjectName(u"horizontalLayoutWidget_3")
-        self.horizontalLayoutWidget_3.setGeometry(QRect(470, 0, 104, 41))
-        self.horizontalLayout_3 = QHBoxLayout(self.horizontalLayoutWidget_3)
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.labelLastre = QLabel(self.horizontalLayoutWidget_3)
-        self.labelLastre.setObjectName(u"labelLastre")
-
-        self.horizontalLayout_3.addWidget(self.labelLastre)
-
-        self.lineEditLastre = QLineEdit(self.horizontalLayoutWidget_3)
-        self.lineEditLastre.setObjectName(u"lineEditLastre")
-
-        self.horizontalLayout_3.addWidget(self.lineEditLastre)
-
-        self.pesolastreBtnOk = QPushButton(self.centralwidget)
-        self.pesolastreBtnOk.setObjectName(u"pesolastreBtnOk")
-        self.pesolastreBtnOk.setGeometry(QRect(580, 10, 51, 31))
-        self.usrnameBtnOk = QPushButton(self.centralwidget)
-        self.usrnameBtnOk.setObjectName(u"usrnameBtnOk")
-        self.usrnameBtnOk.setEnabled(True)
-        self.usrnameBtnOk.setGeometry(QRect(260, 10, 51, 31))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -155,9 +104,5 @@ class Ui_MainWindow(object):
         self.checkBoxDominadas.setText(QCoreApplication.translate("MainWindow", u"Dominadas", None))
         self.checkBoxFondos.setText(QCoreApplication.translate("MainWindow", u"Fondos", None))
         self.checkBoxPistolsquad.setText(QCoreApplication.translate("MainWindow", u"Pistolsquad", None))
-        self.labelUsrName.setText(QCoreApplication.translate("MainWindow", u"userName", None))
-        self.labelPeso.setText(QCoreApplication.translate("MainWindow", u"peso", None))
-        self.labelLastre.setText(QCoreApplication.translate("MainWindow", u"lastre", None))
-        self.pesolastreBtnOk.setText(QCoreApplication.translate("MainWindow", u"ok", None))
-        self.usrnameBtnOk.setText(QCoreApplication.translate("MainWindow", u"ok", None))
     # retranslateUi
+

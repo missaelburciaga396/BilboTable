@@ -1,6 +1,8 @@
 # ViewModel/BilboMainViewModel.py
 from PySide6.QtCore import QAbstractTableModel, Qt
 from Model.fondosModel import FondosModel
+from View.RegistrarBilboView import Ui_widget
+from PySide6.QtWidgets import QDialog
 
 
 class PandasModel(QAbstractTableModel):
@@ -39,3 +41,11 @@ class BilboMainViewModel:
 
         # Retorna un modelo de Pandas para QTableView
         return PandasModel(data)
+
+    def registrar_widget(self):
+        self.dialogo_registro = QDialog()
+        self.ui_registro = Ui_widget()
+        self.ui_registro.setupUi(self.dialogo_registro)
+
+        # Mostrar el diálogo de registro como ventana modal
+        self.dialogo_registro.exec()
